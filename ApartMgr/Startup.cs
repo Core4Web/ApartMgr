@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using ApartMgr.Data;
 
 namespace ApartMgr
 {
@@ -17,6 +19,7 @@ namespace ApartMgr
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
@@ -25,6 +28,8 @@ namespace ApartMgr
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApartMgrContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ApartMgrConnection")));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
