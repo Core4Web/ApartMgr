@@ -30,6 +30,8 @@ namespace ApartMgr
         {
             services.AddDbContext<ApartMgrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ApartMgrConnection")));
+            services.AddMvc();
+            services.AddScoped<IPeriodRepository, PeriodRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -39,12 +41,12 @@ namespace ApartMgr
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-
-            app.Run(async (context) =>
+            } else
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+
+            }
+            app.UseStaticFiles();
+            app.UseMvc();
         }
     }
 }
