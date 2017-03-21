@@ -32,6 +32,7 @@ namespace ApartMgr
                 options.UseSqlServer(Configuration.GetConnectionString("ApartMgrConnection")));
             services.AddMvc();
             services.AddScoped<IPeriodRepository, PeriodRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

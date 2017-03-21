@@ -12,6 +12,7 @@ namespace ApartMgr.Data
         public ApartMgrContext(DbContextOptions<ApartMgrContext> options): base(options)
         {  }
         public DbSet<Period> Periods { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
     }
 }
