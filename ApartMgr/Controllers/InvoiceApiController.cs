@@ -26,5 +26,13 @@ namespace ApartMgr.Controllers
 
             return new JsonResult(model);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetInvoice(int id)
+        {
+            var entity = _invoiceRepository.GetInvoice(id);
+            var model = Mapper.Map<InvoiceList>(entity);
+            return new JsonResult(model);
+        }
     }
 }

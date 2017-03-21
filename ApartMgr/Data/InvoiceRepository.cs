@@ -10,6 +10,7 @@ namespace ApartMgr.Data
     public interface IInvoiceRepository
     {
         IEnumerable<Invoice> GetInvoices();
+        Invoice GetInvoice(int id);
     }
 
     public class InvoiceRepository : IInvoiceRepository
@@ -18,6 +19,13 @@ namespace ApartMgr.Data
         public InvoiceRepository(ApartMgrContext ctx)
         {
             _ctx = ctx;
+        }
+
+        public Invoice GetInvoice(int id)
+        {
+            return _ctx.Invoices
+                .Include(i=>i.Period)
+                .SingleOrDefault(x=>x.Id==id);
         }
 
         public IEnumerable<Invoice> GetInvoices()
