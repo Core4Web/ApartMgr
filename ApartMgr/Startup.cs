@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using ApartMgr.Data;
+using ApartMgr.Models;
+using ApartMgr.ViewModels;
 
 namespace ApartMgr
 {
@@ -42,12 +44,19 @@ namespace ApartMgr
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } else
+            }
+            else
             {
 
             }
             app.UseStaticFiles();
             app.UseMvc();
+            AutoMapper.Mapper.Initialize(config =>
+            {
+                config.CreateMap<Invoice, InvoiceList>()
+                    .ForMember(dest => dest.PeriodName, opt => opt.MapFrom(src => src.Period.PeriodName));
+
+            });
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using ApartMgr.Data;
+using ApartMgr.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,10 @@ using System.Threading.Tasks;
 namespace ApartMgr.Controllers
 {
     [Route("api/invoices")]
-    public class InvoiceController: Controller
+    public class InvoiceApiController: Controller
     {
         private readonly IInvoiceRepository _invoiceRepository;
-        public InvoiceController(IInvoiceRepository invoiceRepository)
+        public InvoiceApiController(IInvoiceRepository invoiceRepository)
         {
             _invoiceRepository = invoiceRepository;
         }
@@ -20,7 +22,9 @@ namespace ApartMgr.Controllers
         public IActionResult GetInvoices()
         {
             var entity = _invoiceRepository.GetInvoices();
-            return new JsonResult(entity);
+            var model = Mapper.Map<IEnumerable<InvoiceList>>(entity);
+
+            return new JsonResult(model);
         }
     }
 }
