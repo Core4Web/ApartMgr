@@ -20,9 +20,15 @@ namespace ApartMgr.Controllers
         [HttpGet()]
         public IActionResult GetPeriods()
         {
-            var periods = _periodRepository.GetPeriods();
-            return new JsonResult(periods);
-
+            try
+            {
+                var periods = _periodRepository.GetPeriods();
+                return Ok(periods);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

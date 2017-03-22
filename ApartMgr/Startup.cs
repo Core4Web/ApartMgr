@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ApartMgr.Data;
 using ApartMgr.Models;
 using ApartMgr.ViewModels;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace ApartMgr
 {
@@ -32,7 +33,12 @@ namespace ApartMgr
         {
             services.AddDbContext<ApartMgrContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ApartMgrConnection")));
-            services.AddMvc();
+            services.AddMvc(setup=>
+            {
+                setup.ReturnHttpNotAcceptable = true;
+                setup.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            });
+
             services.AddScoped<IPeriodRepository, PeriodRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
         }
@@ -55,7 +61,7 @@ namespace ApartMgr
             {
                 config.CreateMap<Invoice, InvoiceList>()
                     .ForMember(dest => dest.PeriodName, opt => opt.MapFrom(src => src.Period.PeriodName));
-
+                config.CreateMap<InvoiceCreate, Invoice>();
             });
         }
     }
