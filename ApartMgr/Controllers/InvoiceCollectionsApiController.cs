@@ -23,20 +23,27 @@ namespace ApartMgr.Controllers
         [HttpPost]
         public IActionResult CreateInvoiceCollection([FromBody] IEnumerable<InvoiceCreate> model)
         {
-            if (model == null)
+            try
             {
-                return BadRequest();
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+                var entities = Mapper.Map<IEnumerable<Invoice>>(model);
+                foreach (var item in entities)
+                {
+                    _invoiceRepository.Create(item);
+                }
+                if (!_invoiceRepository.Commit())
+                {
+                    return StatusCode(500, "Failed create new invoice");
+                }
+                return Ok();
             }
-            var entities = Mapper.Map<IEnumerable<Invoice>>(model);
-            foreach (var item in entities)
+            catch (Exception ex)
             {
-                _invoiceRepository.Create(item);
+                return StatusCode(500, ex.Message);
             }
-            if (!_invoiceRepository.Commit())
-            {
-                return StatusCode(500, "Failed create new invoice");
-            }
-            return Ok();
         }
 
     }

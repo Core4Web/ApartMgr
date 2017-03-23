@@ -37,10 +37,12 @@ namespace ApartMgr
             {
                 setup.ReturnHttpNotAcceptable = true;
                 setup.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                setup.InputFormatters.Add(new XmlDataContractSerializerInputFormatter());
             });
 
             services.AddScoped<IPeriodRepository, PeriodRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

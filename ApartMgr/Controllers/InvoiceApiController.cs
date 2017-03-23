@@ -14,6 +14,7 @@ namespace ApartMgr.Controllers
     public class InvoiceApiController: Controller
     {
         private readonly IInvoiceRepository _invoiceRepository;
+
         public InvoiceApiController(IInvoiceRepository invoiceRepository)
         {
             _invoiceRepository = invoiceRepository;
@@ -28,9 +29,9 @@ namespace ApartMgr.Controllers
                 var model = Mapper.Map<IEnumerable<InvoiceList>>(entity);
                 return Ok(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, "Failed to get invoices");
             }
         }
 
@@ -47,26 +48,53 @@ namespace ApartMgr.Controllers
                 var model = Mapper.Map<InvoiceList>(entity);
                 return Ok(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Failed to get invoice {id}");
             }
         }
         [HttpPost]
         public IActionResult CreateInvoice([FromBody] InvoiceCreate model)
         {
-            if(model==null)
+            try
             {
-                return BadRequest();
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+                var entity = Mapper.Map<Invoice>(model);
+                _invoiceRepository.Create(entity);
+                if (!_invoiceRepository.Commit())
+                {
+                    return StatusCode(500, "Failed to create new invoice");
+                }
+                var returnModel = Mapper.Map<InvoiceList>(entity);
+                return CreatedAtRoute("GetInvoice", new { id = entity.Id }, returnModel);
             }
-            var entity = Mapper.Map<Invoice>(model);
-            _invoiceRepository.Create(entity);
-            if (!_invoiceRepository.Commit())
+            catch (Exception)
             {
-                return StatusCode(500, "Failed create new invoice");
+                return StatusCode(500, "Failed to create new invoice");
             }
-            var returnModel = Mapper.Map<InvoiceList>(entity);
-            return CreatedAtRoute("GetInvoice", new { id = entity.Id}, returnModel);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteInvoice(int id)
+        {
+            if(!_invoiceRepository.InvoiceExists(id))
+            {
+                return NotFound();
+            }
+            var entity = _invoiceRepository.GetInvoice(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            _invoiceRepository.DeleteInvoice(entity);
+            if(!_invoiceRepository.Commit())
+            {
+                return StatusCode(500, $"Failed to delete invoice {id}");
+            }
+            return NoContent();
         }
     }
 }
