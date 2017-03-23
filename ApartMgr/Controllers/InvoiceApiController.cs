@@ -53,6 +53,7 @@ namespace ApartMgr.Controllers
                 return StatusCode(500, $"Failed to get invoice {id}");
             }
         }
+
         [HttpPost]
         public IActionResult CreateInvoice([FromBody] InvoiceCreate model)
         {
@@ -95,6 +96,33 @@ namespace ApartMgr.Controllers
                 return StatusCode(500, $"Failed to delete invoice {id}");
             }
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult InvoicePut(int id, [FromBody] InvoiceUpdate model)
+        {
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+                var entity = _invoiceRepository.GetInvoice(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                Mapper.Map(model, entity);
+                if (!_invoiceRepository.Commit())
+                {
+                    return StatusCode(500, $"Failed to update invoice {id}");
+                }
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Failed to update invoice {id}");
+            }
         }
     }
 }
