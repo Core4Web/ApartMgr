@@ -8,9 +8,10 @@ using ApartMgr.Data;
 namespace ApartMgr.Migrations
 {
     [DbContext(typeof(ApartMgrContext))]
-    partial class ApartMgrContextModelSnapshot : ModelSnapshot
+    [Migration("20170325210455_V2")]
+    partial class V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

@@ -20,6 +20,20 @@ INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(12, N'Декабрь')
 GO
 SET IDENTITY_INSERT [dbo].[Periods] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Providers] ON
+GO
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(1, N'ООО СтройМАКС')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(2, N'АО ОЕИРЦ')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(3, N'ООО Мега-Т')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(4, N'ООО Газпром межрегионгаз Тула')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(5, N'ПАО Ростелеком')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(6, N'АО «ТНС энерго Тула»')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(7, N'ПАО «Вымпелком»')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(8, N'ОАО «НТВ-ПЛЮС»')
+INSERT INTO [dbo].[Providers] (Id, ProviderName) VALUES(9, N'Финансовое управление администрации города Тулы')
+GO
+SET IDENTITY_INSERT [dbo].[Providers] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Invoices] ON
 GO
 INSERT INTO [dbo].[Invoices] (Id, Number, Account, PeriodId, Year) 
