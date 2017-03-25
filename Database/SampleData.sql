@@ -5,18 +5,18 @@ DELETE FROM [dbo].[Periods]
 GO
 SET IDENTITY_INSERT [dbo].[Periods] ON
 GO
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(1, N'ίνβΰπό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(2, N'Τεβπΰλό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(3, N'Μΰπς')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(4, N'ΐοπελό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(5, N'Μΰι')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(6, N'Θώνό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(7, N'Θώλό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(8, N'ΐβγσρς')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(9, N'Ρενςÿαπό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(10, N'Ξκςÿαπό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(11, N'Νξÿαπό')
-INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(12, N'Δεκΰαπό')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(1, N'Π―Π½Π²Π°Ρ€Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(2, N'Π¤ΠµΠ²Ρ€Π°Π»Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(3, N'ΠΠ°Ρ€Ρ‚')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(4, N'ΠΠΏΡ€ΠµΠ»Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(5, N'ΠΠ°ΠΉ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(6, N'ΠΡΠ½Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(7, N'ΠΡΠ»Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(8, N'ΠΠ²Π³ΡƒΡΡ‚')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(9, N'Π΅ΠµΠ½Ρ‚ΡΠ±Ρ€Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(10, N'ΠΠΊΡ‚ΡΠ±Ρ€Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(11, N'ΠΠΎΡΠ±Ρ€Ρ')
+INSERT INTO [dbo].[Periods] (Id, PeriodName) VALUES(12, N'Π”ΠµΠΊΠ°Π±Ρ€Ρ')
 GO
 SET IDENTITY_INSERT [dbo].[Periods] OFF
 GO
@@ -31,7 +31,7 @@ INSERT INTO [dbo].[Invoices] (Id, Number, Account, PeriodId, Year)
 INSERT INTO [dbo].[Invoices] (Id, Number, Account, PeriodId, Year) 
   VALUES(4, N'145', N'946546', 7, 2016)
 INSERT INTO [dbo].[Invoices] (Id, Number, Account, PeriodId, Year) 
-  VALUES(5, N'ΐΑ567', N'71018946546', 5, 2016)
+  VALUES(5, N'ΠΠ‘567', N'71018946546', 5, 2016)
 GO
 SET IDENTITY_INSERT [dbo].[Invoices] OFF
 GO
