@@ -81,21 +81,28 @@ namespace ApartMgr.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteInvoice(int id)
         {
-            if(!_invoiceRepository.InvoiceExists(id))
+            try
             {
-                return NotFound();
+                if (!_invoiceRepository.InvoiceExists(id))
+                {
+                    return NotFound();
+                }
+                var entity = _invoiceRepository.GetInvoice(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                _invoiceRepository.DeleteInvoice(entity);
+                if (!_invoiceRepository.Commit())
+                {
+                    return StatusCode(500, $"Failed to delete invoice {id}");
+                }
+                return NoContent();
             }
-            var entity = _invoiceRepository.GetInvoice(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            _invoiceRepository.DeleteInvoice(entity);
-            if(!_invoiceRepository.Commit())
+            catch (Exception)
             {
                 return StatusCode(500, $"Failed to delete invoice {id}");
             }
-            return NoContent();
         }
 
         [HttpPut("{id}")]
@@ -110,7 +117,14 @@ namespace ApartMgr.Controllers
                 var entity = _invoiceRepository.GetInvoice(id);
                 if (entity == null)
                 {
-                    return NotFound();
+                    entity = Mapper.Map<Invoice>(model);
+                    _invoiceRepository.Create(entity);
+                    if (!_invoiceRepository.Commit())
+                    {
+                        return StatusCode(500, $"Failed to upsert invoice");
+                    }
+                    var returnModel = Mapper.Map<InvoiceList>(entity);
+                    return CreatedAtRoute("GetInvoice", new { id = entity.Id }, returnModel);
                 }
                 Mapper.Map(model, entity);
                 if (!_invoiceRepository.Commit())
