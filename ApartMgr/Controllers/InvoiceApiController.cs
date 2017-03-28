@@ -1,4 +1,5 @@
 ﻿using ApartMgr.Data;
+using ApartMgr.Helpers;
 using ApartMgr.Models;
 using ApartMgr.ViewModels;
 using AutoMapper;
@@ -65,6 +66,10 @@ namespace ApartMgr.Controllers
                 {
                     return BadRequest();
                 }
+                if(!ModelState.IsValid)
+                {
+                    return new UnprocessableEntityObjectResult(ModelState);
+                }
                 var entity = Mapper.Map<Invoice>(model);
                 _invoiceRepository.Create(entity);
                 if (!_invoiceRepository.Commit())
@@ -125,6 +130,10 @@ namespace ApartMgr.Controllers
                 if (model == null)
                 {
                     return BadRequest();
+                }
+                if (!ModelState.IsValid)
+                {
+                    return new UnprocessableEntityObjectResult(ModelState);
                 }
                 var entity = _invoiceRepository.GetInvoice(id);
                 if (entity == null)
