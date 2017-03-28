@@ -2,6 +2,7 @@
 using ApartMgr.Models;
 using ApartMgr.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -77,6 +78,16 @@ namespace ApartMgr.Controllers
             {
                 return StatusCode(500, "Failed to create new invoice");
             }
+        }
+
+        [HttpPost("{id}")]
+        public IActionResult BlockCreation(int id)
+        {
+            if(_invoiceRepository.InvoiceExists(id))
+            {
+                return new StatusCodeResult(StatusCodes.Status409Conflict);
+            }
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
