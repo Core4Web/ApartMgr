@@ -2,6 +2,7 @@
 using ApartMgr.Models;
 using ApartMgr.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ namespace ApartMgr.Controllers
                 _invoiceRepository.Create(entity);
                 if (!_invoiceRepository.Commit())
                 {
-                    return StatusCode(500, "Failed to create new invoice");
+                    throw new Exception();
                 }
                 var returnModel = Mapper.Map<InvoiceList>(entity);
                 return CreatedAtRoute("GetInvoice", new { id = entity.Id }, returnModel);
@@ -95,7 +96,7 @@ namespace ApartMgr.Controllers
                 _invoiceRepository.DeleteInvoice(entity);
                 if (!_invoiceRepository.Commit())
                 {
-                    return StatusCode(500, $"Failed to delete invoice {id}");
+                    throw new Exception();
                 }
                 return NoContent();
             }
@@ -121,7 +122,7 @@ namespace ApartMgr.Controllers
                     _invoiceRepository.Create(entity);
                     if (!_invoiceRepository.Commit())
                     {
-                        return StatusCode(500, $"Failed to upsert invoice");
+                        throw new Exception();
                     }
                     var returnModel = Mapper.Map<InvoiceList>(entity);
                     return CreatedAtRoute("GetInvoice", new { id = entity.Id }, returnModel);
@@ -129,7 +130,7 @@ namespace ApartMgr.Controllers
                 Mapper.Map(model, entity);
                 if (!_invoiceRepository.Commit())
                 {
-                    return StatusCode(500, $"Failed to update invoice {id}");
+                    throw new Exception();
                 }
                 return NoContent();
             }
@@ -138,5 +139,35 @@ namespace ApartMgr.Controllers
                 return StatusCode(500, $"Failed to update invoice {id}");
             }
         }
+
+        [HttpPatch("{id}")]
+        public IActionResult PatchInvoice(int id, [FromBody] JsonPatchDocument patchModel)
+        {
+            try
+            {
+                if (patchModel == null)
+                {
+                    return BadRequest();
+                }
+                var entity = _invoiceRepository.GetInvoice(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                var model = Mapper.Map<InvoiceUpdate>(entity);
+                patchModel.ApplyTo(model);
+                Mapper.Map(model, entity);
+                if (!_invoiceRepository.Commit())
+                {
+                    throw new Exception();
+                }
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Failed to patch invoice {id}");
+            }
+        }
+
     }
 }

@@ -65,6 +65,7 @@ namespace ApartMgr
                     .ForMember(dest => dest.PeriodName, opt => opt.MapFrom(src => src.Period.PeriodName));
                 config.CreateMap<InvoiceCreate, Invoice>();
                 config.CreateMap<InvoiceUpdate, Invoice>();
+                config.CreateMap<Invoice, InvoiceUpdate>();
             });
         }
     }
