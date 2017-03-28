@@ -161,7 +161,7 @@ namespace ApartMgr.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult PatchInvoice(int id, [FromBody] JsonPatchDocument patchModel)
+        public IActionResult PatchInvoice(int id, [FromBody] JsonPatchDocument<InvoiceUpdate> patchModel)
         {
             try
             {
@@ -175,7 +175,11 @@ namespace ApartMgr.Controllers
                     return NotFound();
                 }
                 var model = Mapper.Map<InvoiceUpdate>(entity);
-                patchModel.ApplyTo(model);
+                patchModel.ApplyTo(model, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return new UnprocessableEntityObjectResult(ModelState);
+                }
                 Mapper.Map(model, entity);
                 if (!_invoiceRepository.Commit())
                 {
