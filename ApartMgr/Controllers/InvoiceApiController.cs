@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,12 @@ namespace ApartMgr.Controllers
     public class InvoiceApiController: Controller
     {
         private readonly IInvoiceRepository _invoiceRepository;
+        private readonly ILogger<InvoiceApiController> _logger;
 
-        public InvoiceApiController(IInvoiceRepository invoiceRepository)
+        public InvoiceApiController(IInvoiceRepository invoiceRepository, ILogger<InvoiceApiController> logger)
         {
             _invoiceRepository = invoiceRepository;
+            _logger = logger;
         }
 
         [HttpGet()]

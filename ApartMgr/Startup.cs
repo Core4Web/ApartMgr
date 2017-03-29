@@ -13,6 +13,7 @@ using ApartMgr.Data;
 using ApartMgr.Models;
 using ApartMgr.ViewModels;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using NLog.Extensions.Logging;
 
 namespace ApartMgr
 {
@@ -47,7 +48,10 @@ namespace ApartMgr
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddDebug(LogLevel.Information);
             loggerFactory.AddConsole();
+            //loggerFactory.AddProvider(new NLog.Extensions.Logging.NLogLoggerProvider());
+            loggerFactory.AddNLog();
 
             if (env.IsDevelopment())
             {
