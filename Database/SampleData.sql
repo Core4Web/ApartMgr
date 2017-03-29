@@ -2,6 +2,7 @@ USE ApartMgrDB
 GO
 DELETE FROM [dbo].[Invoices]
 DELETE FROM [dbo].[Periods]
+DELETE FROM [dbo].[Providers]
 GO
 SET IDENTITY_INSERT [dbo].[Periods] ON
 GO
