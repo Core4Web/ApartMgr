@@ -17,7 +17,6 @@ namespace ApartMgr.Controllers
     [Route("api/invoices")]
     public class InvoiceApiController: Controller
     {
-        const int maxPageSize = 5;
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly ILogger<InvoiceApiController> _logger;
 
@@ -28,9 +27,8 @@ namespace ApartMgr.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetInvoices([FromQuery] int pageNumber=1, [FromQuery] int pageSize=3)
+        public IActionResult GetInvoices(InvoiceResourceParameters invoiceResourceParameters)
         {
-            pageSize = (pageSize > maxPageSize) ? maxPageSize : pageSize;
             try
             {
                 var entity = _invoiceRepository.GetInvoices();
