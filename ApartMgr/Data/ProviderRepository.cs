@@ -13,6 +13,7 @@ namespace ApartMgr.Data
         void Create(Provider entity);
         bool Commit();
         bool ProviderExists(int id);
+        void Delete(Provider entity);
     }
 
     public class ProviderRepository : IProviderRepository
@@ -31,6 +32,11 @@ namespace ApartMgr.Data
         public void Create(Provider entity)
         {
             _ctx.Providers.Add(entity);
+        }
+
+        public void Delete(Provider entity)
+        {
+            _ctx.Providers.Remove(entity);
         }
 
         public Provider GetProvider(int id)

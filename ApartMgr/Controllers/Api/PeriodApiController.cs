@@ -26,7 +26,7 @@ namespace ApartMgr.Controllers.Api
                 var periods = _periodRepository.GetAll();
                 return Ok(periods);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Failed to get periods");
             }

@@ -93,5 +93,32 @@ namespace ApartMgr.Controllers.Api
             return NotFound();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProvider(int id)
+        {
+            try
+            {
+                if (!_providerRepository.ProviderExists(id))
+                {
+                    return NotFound();
+                }
+                var entity = _providerRepository.GetProvider(id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                _providerRepository.Delete(entity);
+                if (!_providerRepository.Commit())
+                {
+                    throw new Exception();
+                }
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, $"Failed to delete provider {id}");
+            }
+        }
+
     }
 }
