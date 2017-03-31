@@ -1,18 +1,19 @@
 ﻿using ApartMgr.Data;
+using ApartMgr.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApartMgr.Controllers
+namespace ApartMgr.Controllers.Api
 {
     [Route("api/periods")]
     public class PeriodApiController: Controller
     {
-        private readonly IPeriodRepository _periodRepository;
+        private readonly IRepository<Period> _periodRepository;
 
-        public PeriodApiController(IPeriodRepository periodRepository)
+        public PeriodApiController(IRepository<Period> periodRepository)
         {
             _periodRepository = periodRepository;
         }
@@ -22,12 +23,12 @@ namespace ApartMgr.Controllers
         {
             try
             {
-                var periods = _periodRepository.GetPeriods();
+                var periods = _periodRepository.GetAll();
                 return Ok(periods);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, "Failed to get periods");
             }
         }
     }

@@ -43,6 +43,7 @@ namespace ApartMgr
 
             services.AddScoped<IPeriodRepository, PeriodRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IProviderRepository, ProviderRepository>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
@@ -50,7 +51,6 @@ namespace ApartMgr
         {
             loggerFactory.AddDebug(LogLevel.Information);
             loggerFactory.AddConsole();
-            //loggerFactory.AddProvider(new NLog.Extensions.Logging.NLogLoggerProvider());
             loggerFactory.AddNLog();
 
             if (env.IsDevelopment())

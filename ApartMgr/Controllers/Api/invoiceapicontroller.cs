@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApartMgr.Controllers
+namespace ApartMgr.Controllers.Api
 {
     [Route("api/invoices")]
     public class InvoiceApiController: Controller

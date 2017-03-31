@@ -19,6 +19,9 @@ namespace ApartMgr
                 config.CreateMap<InvoiceCreate, Invoice>();
                 config.CreateMap<InvoiceUpdate, Invoice>();
                 config.CreateMap<Invoice, InvoiceUpdate>();
+                //InvoiceProvider
+                config.CreateMap<Provider, ProviderDetail>();
+                config.CreateMap<ProviderCreate, Provider>();
             });
         }
     }

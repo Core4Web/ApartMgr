@@ -23,6 +23,7 @@ namespace ApartMgr.Data
         void Delete(T entity);
         void Delete(Expression<Func<T, bool>> where);
         void Save();
+        bool Commit();
     }
 
     public class GenericRepository<T> : IRepository<T> where T : class
@@ -115,6 +116,10 @@ namespace ApartMgr.Data
         public virtual void Save()
         {
             _context.SaveChanges();
+        }
+        public bool Commit()
+        {
+            return _context.SaveChanges() > 0;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ApartMgr.Helpers
         public int PageNumber { get; set; } = 1;
         public int PageSize
         {
-            get { return _pageSize; }
+            get => _pageSize;
             set
             {
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
