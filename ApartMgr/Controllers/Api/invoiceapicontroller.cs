@@ -31,7 +31,12 @@ namespace ApartMgr.Controllers.Api
         {
             try
             {
-                var entity = _invoiceRepository.GetInvoices();
+                var entity = _invoiceRepository.GetInvoices(invoiceResourceParameters);
+                var paginationMetaData = new
+                {
+                    totalCount = 1
+                };
+                Response.Headers.Add("X-Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetaData));
                 var model = Mapper.Map<IEnumerable<InvoiceList>>(entity);
                 return Ok(model);
             }

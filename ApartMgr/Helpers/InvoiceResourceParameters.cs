@@ -19,5 +19,7 @@ namespace ApartMgr.Helpers
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
             }
         }
+        public string SearchQuery { get; set; }
+        public int? Period { get; set; }
     }
 }
