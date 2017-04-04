@@ -11,7 +11,7 @@ namespace ApartMgr.Data
     public interface IInvoiceRepository
     {
         DbSet<Invoice> Table { get; }
-        IEnumerable<Invoice> GetInvoices(InvoiceResourceParameters invoiceParameters);
+        PagetList<Invoice> GetInvoices(InvoiceResourceParameters invoiceParameters);
         Invoice GetInvoice(int id);
         void Create(Invoice invoice);
         bool InvoiceExists(int id);
@@ -35,7 +35,7 @@ namespace ApartMgr.Data
                 .SingleOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Invoice> GetInvoices(InvoiceResourceParameters invoiceParameters)
+        public PagetList<Invoice> GetInvoices(InvoiceResourceParameters invoiceParameters)
         {
             var query = _ctx.Invoices.Include(i => i.Period).AsQueryable();
             if (invoiceParameters.Period!=null)
@@ -48,9 +48,7 @@ namespace ApartMgr.Data
                 query = query.Where(x => x.Number.ToLowerInvariant().Contains(whereClause) ||
                     x.Account.ToLowerInvariant().Contains(whereClause));
             }
-            return query.Skip(invoiceParameters.PageSize*(invoiceParameters.PageNumber-1))
-                .Take(invoiceParameters.PageSize)
-                .ToList();
+            return PagetList<Invoice>.Create(query, invoiceParameters.PageNumber, invoiceParameters.PageSize);
         }
 
         public void Create(Invoice invoice)
